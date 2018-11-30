@@ -1,0 +1,10 @@
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/Discussions.deps.json
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/Discussions.runtimeconfig.json
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/Discussions.runtimeconfig.dev.json
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/Discussions.dll
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/Discussions.pdb
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/Discussions.csproj.CoreCompileInputs.cache
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/Discussions.AssemblyInfoInputs.cache
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/Discussions.AssemblyInfo.cs
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/Discussions.dll
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/Discussions.pdb

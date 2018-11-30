@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "What does ‘for’ mean in ‘We are done for’?";
+}
+
+<style>
+.dateText {
+    float: right;
+    margin: 0px;
+}
+.authorText {
+    
+}
+.commentText {
+    clear: right;
+    padding-left: 80px;
+    padding-top: 20px;
+
+}
+</style>
+
+<h3>@ViewData["Title"]</h3>
+<hr>
+<p>
+    <img src="https://via.placeholder.com/60" style="float: left; padding-right: 20px;" />
+    <div class="dateText">3d ago</div>
+    <div class="authorText">chris-g</div>
+    <div class="commentText">@Html.Raw(@ViewData["Message"])</div>
+</p>
