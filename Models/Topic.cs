@@ -1,12 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Discussions.Models {
     public class Topic {
-        public int id = 1;
-        public string title = "Test";
-        public string message = "This is a test post.";
-
-        public string[] comments;
+        [Key]
+        public Guid id { get; set; }
+        public string title { get; set; }
+        public List<Comment> comments { get; set; }
     }
 
 }

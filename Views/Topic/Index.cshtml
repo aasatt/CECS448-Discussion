@@ -1,6 +1,4 @@
-@{
-    ViewData["Title"] = "What does ‘for’ mean in ‘We are done for’?";
-}
+@model Discussions.Models.Topic
 
 <style>
 .dateText {
@@ -10,6 +8,14 @@
 .authorText {
     
 }
+
+#authorImage {
+    border-radius: 30px;
+    padding: 20px; 
+    width: 60px;
+    height: 60px;
+}
+
 .commentText {
     clear: right;
     padding-left: 80px;
@@ -18,11 +24,15 @@
 }
 </style>
 
-<h3>@ViewData["Title"]</h3>
+<h3>@Model.title</h3>
+@foreach (var item in @Model.comments)
+{
 <hr>
 <p>
-    <img src="https://via.placeholder.com/60" style="float: left; padding-right: 20px;" />
+    <img src=@item.author.imageUrl width="80" style="float: left; padding-right: 20px;" />
     <div class="dateText">3d ago</div>
     <div class="authorText">chris-g</div>
-    <div class="commentText">@Html.Raw(@ViewData["Message"])</div>
-</p>
+    <div class="commentText">@Html.Raw(@item.message)</div>
+</p>   
+}
+<a asp-action="Reply" method="post">Reply</a> |
