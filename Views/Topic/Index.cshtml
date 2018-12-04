@@ -48,7 +48,7 @@
 <p>
     <img src=@item.author.imageUrl width="80" style="float: left; padding-right: 20px;" />
     <div class="dateText">3d ago</div>
-    <div class="authorText">chris-g</div>
+    <div class="authorText">@item.author.name</div>
     <div class="commentText">@Html.Raw(@item.message)</div>
 </p>   
 }
@@ -57,9 +57,7 @@
 <div id="replyBox" style="display:none;">
     <div class="gallery-text">
         <h3>Reply</h3>
-        <textarea class="reply-box" style="width:100%;" rows="15" cols="50" oninput="textAreaChanged(this);">
-
-        </textarea>
+        <textarea id="textbox" class="reply-box" style="width:100%;" rows="15" cols="50" oninput="textAreaChanged(this);"></textarea>
     </div>
     <div class="gallery-text">
         <h3>Preview</h3>
@@ -90,6 +88,19 @@
         $('#cancelButton').hide();
         $('#replyButton').show();
         $('#postButton').hide();
+    }
+
+    function postComment()
+    {
+        var comment = jQuery("textarea#textbox").val();
+        $.ajax({
+            type: 'POST',
+            url: '/topic/postcomment?id=@Model.id&comment='+comment,
+            dataType: "html",
+            success: function(result){
+                window.location.href = "/"
+            }
+        });
     }
 
     function textAreaChanged(textArea)
