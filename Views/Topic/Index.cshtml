@@ -22,6 +22,23 @@
     padding-top: 20px;
 
 }
+
+.reply-box {
+    float: left;
+    width: 48%;
+    margin: 1%;
+    resize: none;
+}
+
+.gallery-text {
+    float: left;
+    width: 48%;
+    margin: 1%;
+}
+.gallery-text p {
+    word-break: break-all;
+}
+
 </style>
 
 <h3>@Model.title</h3>
@@ -35,4 +52,56 @@
     <div class="commentText">@Html.Raw(@item.message)</div>
 </p>   
 }
-<a asp-action="Reply" method="post">Reply</a> |
+<a id="replyButton" onclick="makeReplyBoxVisible();">Reply</a>
+
+<div id="replyBox" style="display:none;">
+    <div class="gallery-text">
+        <h3>Reply</h3>
+        <textarea class="reply-box" style="width:100%;" rows="15" cols="50" oninput="textAreaChanged(this);">
+
+        </textarea>
+    </div>
+    <div class="gallery-text">
+        <h3>Preview</h3>
+        <p id="previewBox">
+            
+        </p>
+    </div>  
+</div>
+
+<div style="clear:left">
+<a id="postButton" style="display:none;" onclick="postComment();">Submit</a>
+<a id="cancelButton" style="display:none;" onclick="cancelReply();">Cancel</a>
+</div>
+
+
+<script>
+    function makeReplyBoxVisible()
+    {
+        $('#replyBox').show();
+        $('#cancelButton').show();
+        $('#replyButton').hide();
+        $('#postButton').show();
+    }
+    
+    function cancelReply() 
+    {
+        $('#replyBox').hide();
+        $('#cancelButton').hide();
+        $('#replyButton').show();
+        $('#postButton').hide();
+    }
+
+    function textAreaChanged(textArea)
+    {
+         x = textArea.value;
+         $.ajax({
+            url: "/topic/welcome?markdown="+x,
+            context: document.body
+        }).done(function( data ) {
+            document.getElementById("previewBox").innerHTML = data
+        });
+
+    }
+    
+</script>

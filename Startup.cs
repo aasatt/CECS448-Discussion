@@ -48,7 +48,8 @@ namespace Discussions
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Topic}/{action=Index}/{id?}");
-            });
+                });
+
         }
     }
 }

@@ -27,5 +27,18 @@ namespace Discussions.Controllers
             t.comments = comments;  
             return View(t);
         }
+
+        public string Welcome(string markdown)
+        {
+            if (markdown == null) {
+                return "";
+            }
+            var x = Markdig.Markdown.ToHtml(markdown);
+            if (x == null) {
+                return "Preview will show here...";
+            }
+            return x;
+        }
+ 
     }
 }
