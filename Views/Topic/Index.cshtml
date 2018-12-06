@@ -1,12 +1,62 @@
 @model Discussions.Models.Topic
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
+
 .dateText {
     float: right;
     margin: 0px;
 }
 .authorText {
     
+}
+
+.submitButton {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.cancelButton {
+    background-color: white;
+    border: none;
+    color: black;
+    margin-left: 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.replyButton {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.footer {
+    height: 10px;
+}
+body {
+    padding-bottom: 20px;
+}
+
+.bottomReply {
+    box-shadow:  0 -8px 80px 8px rgba(0, 0, 0, 0.1), 0 20px 50px 0 rgba(0, 0, 0, 0.19);
+    background: white;
+    display: none;
+    width: 90vw;
+    margin-left: -45vw;
+    margin-top:auto;
+    left: 50%;
+    position:fixed;
+    padding-bottom:20px;
+    bottom:0;
 }
 
 #authorImage {
@@ -68,32 +118,39 @@
     }
 </p>   
 }
-<a id="replyButton" onclick="makeReplyBoxVisible();">Reply</a>
+<hr></hr>
+<button class="submitButton" id="replyButton" style="" onclick="makeReplyBoxVisible();"><i class="fa fa-reply"></i>  Reply</button>
 
-<div id="replyBox" style="display:none;">
+<div id="replyBox" class="bottomReply">
     <div class="gallery-text">
-        <h3>Reply</h3>
+        <p style="padding-left:10px;"><b>Reply to:</b> @Model.title</p>
         <textarea id="textbox" class="reply-box" style="width:100%;" rows="15" cols="50" oninput="textAreaChanged(this);"></textarea>
     </div>
     <div class="gallery-text">
-        <h3>Preview</h3>
-        <p id="previewBox"></p>
+        <p id="previewBox" style="padding-top:36px;"></p>
     </div>  
+    <div style="clear:left; padding-left:20px;">
+        <button class="submitButton" onclick="postComment();"><i class="fa fa-reply"></i>   Reply</button>
+        <button class="cancelButton" id="cancelButton" style="display:none;" onclick="cancelReply();">Cancel</button>
 </div>
-
-<div style="clear:left">
-<a id="postButton" style="display:none;" onclick="postComment();">Submit</a>
-<a id="cancelButton" style="display:none;" onclick="cancelReply();">Cancel</a>
 </div>
 
 
 <script>
+
+    $('.bottomReply').resizable({
+        handles: 'n,w,s,e',
+        minHeight: 300,
+        maxHeight: 900
+    });
+
     function makeReplyBoxVisible()
     {
         $('#replyBox').show();
         $('#cancelButton').show();
         $('#replyButton').hide();
         $('#postButton').show();
+        document.body.style.paddingBottom = "450px"
     }
     
     function cancelReply() 
@@ -102,6 +159,7 @@
         $('#cancelButton').hide();
         $('#replyButton').show();
         $('#postButton').hide();
+        document.body.style.paddingBottom = "20px"
     }
 
     function postComment()
