@@ -6,6 +6,7 @@ namespace Discussions.Models {
         [Key]
         public Guid id { get; set; }
         public string message { get; set; }
+        public string rawComment { get; set; }
         public Discussions.Models.User author { get; set; }
     }
 }

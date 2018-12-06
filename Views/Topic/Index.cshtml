@@ -49,7 +49,23 @@
     <img src=@item.author.imageUrl width="80" style="float: left; padding-right: 20px;" />
     <div class="dateText">3d ago</div>
     <div class="authorText">@item.author.name</div>
-    <div class="commentText">@Html.Raw(@item.message)</div>
+    <div id="comment-text-@item.id.ToString()" class="commentText">@Html.Raw(@item.message)</div>
+    @if (item.author.id == new System.Guid("667F39D4-9CE0-4BE7-954C-FD2D04CDD38B")) {
+        <div id="edit-box-@item.id.ToString()" style="display:none; clear: right; padding-left: 80px; padding-top: 20px;">
+            <div class="gallery-text">
+                <textarea id="edit-textbox-@item.id.ToString()" class="reply-box" style="width:100%;" rows="15" cols="50" oninput="textAreaChanged(this, '@item.id.ToString()');"></textarea>
+            </div>
+            <div class="gallery-text">
+                <p id="previewBox-@item.id.ToString()"></p>
+            </div>  
+            <div style="clear:left">
+                <a id="saveEditButton" onclick="saveEdit('@item.id.ToString()');">Save</a>
+                <a id="cancelEditButton" onclick="cancelEdit('@item.id.ToString()');">Cancel</a>
+            </div>
+        </div>
+        <a id="editButton-@item.id.ToString()" onclick="beginEditing('@item.id.ToString()', '@item.rawComment')">Edit</a>
+        <a id="deleteButton-@item.id.ToString()" onclick="deleteComment('@item.id.ToString()');">Delete</a>
+    }
 </p>   
 }
 <a id="replyButton" onclick="makeReplyBoxVisible();">Reply</a>
@@ -61,9 +77,7 @@
     </div>
     <div class="gallery-text">
         <h3>Preview</h3>
-        <p id="previewBox">
-            
-        </p>
+        <p id="previewBox"></p>
     </div>  
 </div>
 
@@ -103,16 +117,78 @@
         });
     }
 
-    function textAreaChanged(textArea)
+    function textAreaChanged(textArea, commentId)
     {
+	    var box = "previewBox"+(commentId != null ? "-"+commentId : "")
          x = textArea.value;
          $.ajax({
-            url: "/topic/welcome?markdown="+encodeURIComponent(x),
+            url: "/topic/ToHTML?markdown="+encodeURIComponent(x),
             context: document.body
         }).done(function( data ) {
-            document.getElementById("previewBox").innerHTML = data
+            if (data != null) {
+                document.getElementById(box).innerHTML = data
+            }
         });
-
     }
+
+    function deleteComment(id) {
+        $.ajax({
+            type: 'POST',
+            url: '/topic/deletecomment?commentId='+encodeURIComponent(id),
+            dataType: "html",
+            success: function(result){
+                window.location.href = "/"
+            }
+        });
+    }
+
+     function beginEditing(commentId, comment)
+    {
+        toggleEditingViews(commentId, true)
+        var commentBoxId = 'edit-textbox-'+commentId
+        var textBox = document.getElementById(commentBoxId)
+        textBox.value = comment;
+        textAreaChanged(textBox, commentId)
+    }
+
+    function saveEdit(commentId) 
+    {
+        var commentBoxId = 'edit-textbox-'+commentId
+        var textBox = document.getElementById(commentBoxId)
+        var message = textBox.value
+        $.ajax({
+            type: 'POST',
+            url: '/topic/editcomment?commentId='+encodeURIComponent(commentId)+"&message="+encodeURIComponent(message),
+            dataType: "html",
+            success: function(result){
+                window.location.href = "/"
+            }
+        });
+    }
+
+    function cancelEdit(commentId)
+    {
+        toggleEditingViews(commentId, false)
+    }
+
+    function toggleEditingViews(commentId, shouldEdit) 
+    {
+        var viewId = 'edit-box-'+commentId
+        var editId =  'editButton-'+commentId
+        var deleteId = 'deleteButton-'+commentId
+        var commentBoxId = 'comment-text-'+commentId
+        if (shouldEdit) {
+            $('#'+viewId).show();
+            $('#'+editId).hide();
+            $('#'+deleteId).hide();
+            $('#'+commentBoxId).hide();
+        } else {
+            $('#'+viewId).hide();
+            $('#'+editId).show();
+            $('#'+deleteId).show();
+            $('#'+commentBoxId).show();
+        }
+    }
+
     
 </script>

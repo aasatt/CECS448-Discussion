@@ -11,9 +11,10 @@ using System;
 namespace Discussions.Migrations
 {
     [DbContext(typeof(DiscussionContext))]
-    partial class DiscussionContextModelSnapshot : ModelSnapshot
+    [Migration("20181206061030_UpdateCommentRawComment")]
+    partial class UpdateCommentRawComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace Discussions.Controllers
@@ -50,14 +49,39 @@ namespace Discussions.Controllers
             }
             var formattedComment = Markdown.ToHtml(comment);
             Comment newComment = new Comment {
-                id = new System.Guid(),
+                id = System.Guid.NewGuid(),
                 author = currentUser,
-                message = formattedComment
+                message = formattedComment,
+                rawComment = comment
             };
             topic.comments.Add(newComment);
             try
             {
                 _context.Topic.Update(topic);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            var redirectUrl = "/";
+            return Json(new { Url = redirectUrl });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditComment(System.Guid? commentId, string message)
+        {
+            if (commentId == null)
+            {
+                return NotFound();
+            }
+            var comment = await _context.Comment.FindAsync(commentId);
+            comment.rawComment = message;
+            comment.message = Markdown.ToHtml(message);
+            try
+            {
+                _context.Comment.Update(comment);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -65,12 +89,34 @@ namespace Discussions.Controllers
                 throw;
             }
 
-            var redirectUrl = "/topic";
+            var redirectUrl = "/";
+            return Json(new { Url = redirectUrl });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(System.Guid? commentId)
+        {
+            if (commentId == null)
+            {
+                return NotFound();
+            }
+            var comment = await _context.Comment.FindAsync(commentId);
+            try
+            {
+                _context.Comment.Remove(comment);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            var redirectUrl = "/";
             return Json(new { Url = redirectUrl });
         }
 
 
-        public string Welcome(string markdown)
+        public string ToHTML(string markdown)
         {
             if (markdown == null) {
                 return "";
