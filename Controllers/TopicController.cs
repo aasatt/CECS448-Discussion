@@ -48,10 +48,11 @@ namespace Discussions.Controllers
             {
                 return NotFound();
             }
+            var formattedComment = Markdown.ToHtml(comment);
             Comment newComment = new Comment {
                 id = new System.Guid(),
                 author = currentUser,
-                message = comment
+                message = formattedComment
             };
             topic.comments.Add(newComment);
             try

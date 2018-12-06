@@ -95,7 +95,7 @@
         var comment = jQuery("textarea#textbox").val();
         $.ajax({
             type: 'POST',
-            url: '/topic/postcomment?id=@Model.id&comment='+comment,
+            url: '/topic/postcomment?id=@Model.id&comment='+encodeURIComponent(x),
             dataType: "html",
             success: function(result){
                 window.location.href = "/"
@@ -107,7 +107,7 @@
     {
          x = textArea.value;
          $.ajax({
-            url: "/topic/welcome?markdown="+x,
+            url: "/topic/welcome?markdown="+encodeURIComponent(x),
             context: document.body
         }).done(function( data ) {
             document.getElementById("previewBox").innerHTML = data
