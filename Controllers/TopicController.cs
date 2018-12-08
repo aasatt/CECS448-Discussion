@@ -17,10 +17,15 @@ namespace Discussions.Controllers
         private DiscussionContext _context;
 
         private User currentUser = new User {
-            id= new System.Guid("667F39D4-9CE0-4BE7-954C-FD2D04CDD38B"),
+            id= new System.Guid("0E9E3C83-2674-42CB-BB67-56283E078462"),
             name = "Demo User", 
             imageUrl = "https://randomuser.me/api/portraits/men/2.jpg"
         };
+        // private User currentUser = new User {
+        //     id= new System.Guid("92462AD2-1166-4638-A667-45612901D5BF"),
+        //     name = "mary-l", 
+        //     imageUrl = "https://randomuser.me/api/portraits/women/19.jpg"
+        // };
         public TopicController(DiscussionContext context) {
             _context = context;
         }

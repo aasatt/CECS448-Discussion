@@ -7,9 +7,13 @@
 .dateText {
     float: right;
     margin: 0px;
+    color: #919191
 }
 .authorText {
-    
+    padding-left:80px;
+    color: #BDBDBD;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .submitButton {
@@ -19,19 +23,29 @@
     padding: 8px 14px;
     font-size: 14px;
     cursor: pointer;
+    font-weight: 600;
+}
+
+.submitButton:hover {
+    background-color: #086CA1;
 }
 
 .cancelButton {
     background-color: white;
     border: none;
-    color: black;
+    color: #616161;
     margin-left: 12px;
     font-size: 14px;
     cursor: pointer;
+    font-weight: 400;
+}
+
+.cancelButton:hover {
+  color: #E0362F;
 }
 
 .replyButton {
-    background-color: DodgerBlue;
+    background-color: #0D87CA;
     border: none;
     color: white;
     padding: 12px 16px;
@@ -89,6 +103,30 @@ body {
     word-break: break-all;
 }
 
+.editButton {
+    float: right;
+    margin-left: 8px;
+    padding: 6px 9px;
+    color: #919191;
+}
+
+.editButton:hover {
+  background-color: #E9E9E9;
+  color: #222222;
+}
+
+.deleteButton {
+    float: right;
+    margin-left: 6px;
+    padding: 6px 9px;
+    color: #919191;
+}
+
+.deleteButton:hover {
+  background-color: #E0362F;
+  color: white;
+}
+
 </style>
 
 <h3>@Model.title</h3>
@@ -96,30 +134,39 @@ body {
 {
 <hr>
 <p>
-    <img src=@item.author.imageUrl width="80" style="float: left; padding-right: 20px;" />
-    <div class="dateText">3d ago</div>
+    <img src=@item.author.imageUrl width="60px" style="float:left;border-radius: 40px;" />
+    @if (@item.author.name == "chris-g") {
+        <div class="dateText">3d ago</div>
+    } else if (@item.author.name == "mary-l") {
+        <div class="dateText">2d ago</div>
+    } else {
+        <div class="dateText">Just now</div>
+    }
     <div class="authorText">@item.author.name</div>
     <div id="comment-text-@item.id.ToString()" class="commentText">@Html.Raw(@item.message)</div>
-    @if (item.author.id == new System.Guid("667F39D4-9CE0-4BE7-954C-FD2D04CDD38B")) {
-        <div id="edit-box-@item.id.ToString()" style="display:none; clear: right; padding-left: 80px; padding-top: 20px;">
+    @if (item.author.id == new System.Guid("0E9E3C83-2674-42CB-BB67-56283E078462")) {
+        <div class="bottomReply" id="edit-box-@item.id.ToString()" style="display:none; clear: right;">
             <div class="gallery-text">
+                <p style="padding-left:10px;"><b>Edit Comment</b></p>
                 <textarea id="edit-textbox-@item.id.ToString()" class="reply-box" style="width:100%;" rows="15" cols="50" oninput="textAreaChanged(this, '@item.id.ToString()');"></textarea>
             </div>
             <div class="gallery-text">
-                <p id="previewBox-@item.id.ToString()"></p>
+                <p id="previewBox-@item.id.ToString()" style="padding-top:36px;"></p>
             </div>  
-            <div style="clear:left">
-                <a id="saveEditButton" onclick="saveEdit('@item.id.ToString()');">Save</a>
-                <a id="cancelEditButton" onclick="cancelEdit('@item.id.ToString()');">Cancel</a>
+            <div style="clear:left; padding-left:20px;">
+                <button id="saveEditButton" class="submitButton" onclick="saveEdit('@item.id.ToString()');"><i class="fa fa-pencil"></i>  Save Edit</button>
+                <button id="cancelEditButton" class="cancelButton" onclick="cancelEdit('@item.id.ToString()');">Cancel</button>
             </div>
         </div>
-        <a id="editButton-@item.id.ToString()" onclick="beginEditing('@item.id.ToString()', '@item.rawComment')">Edit</a>
-        <a id="deleteButton-@item.id.ToString()" onclick="deleteComment('@item.id.ToString()');">Delete</a>
+        <div style="margin-bottom: 10px">
+            <a id="deleteButton-@item.id.ToString()" class="deleteButton" onclick="deleteComment('@item.id.ToString()');" title="Delete this post"><i class="fa fa-trash" style="transform: scale(1.2); "></i></a>
+            <a id="editButton-@item.id.ToString()" class="editButton" onclick="beginEditing('@item.id.ToString()', '@item.rawComment')" title="Edit this post"><i class="fa fa-pencil" style="transform: scale(1.2);" ></i></a>
+        </div>
     }
 </p>   
 }
-<hr></hr>
-<button class="submitButton" id="replyButton" style="" onclick="makeReplyBoxVisible();"><i class="fa fa-reply"></i>  Reply</button>
+<hr style="clear:right;margin-top: 50px;"></hr>
+<button class="submitButton" id="replyButton" style="clear:right;" onclick="makeReplyBoxVisible();"><i class="fa fa-reply" style="margin-right: 10px"></i>Reply</button>
 
 <div id="replyBox" class="bottomReply">
     <div class="gallery-text">
@@ -130,19 +177,15 @@ body {
         <p id="previewBox" style="padding-top:36px;"></p>
     </div>  
     <div style="clear:left; padding-left:20px;">
-        <button class="submitButton" onclick="postComment();"><i class="fa fa-reply"></i>   Reply</button>
+        <button class="submitButton" onclick="postComment();"><i class="fa fa-reply" style="margin-right: 10px"></i>Reply</button>
         <button class="cancelButton" id="cancelButton" style="display:none;" onclick="cancelReply();">Cancel</button>
-</div>
+    </div>
 </div>
 
 
 <script>
 
-    $('.bottomReply').resizable({
-        handles: 'n,w,s,e',
-        minHeight: 300,
-        maxHeight: 900
-    });
+    var isEditing = false
 
     function makeReplyBoxVisible()
     {
@@ -190,18 +233,25 @@ body {
     }
 
     function deleteComment(id) {
-        $.ajax({
-            type: 'POST',
-            url: '/topic/deletecomment?commentId='+encodeURIComponent(id),
-            dataType: "html",
-            success: function(result){
-                window.location.href = "/"
-            }
-        });
+        var answer = confirm("Are you sure you want to delete this comment?\n\nClick OK to confirm delete.")
+        if (answer){
+            $.ajax({
+                type: 'POST',
+                url: '/topic/deletecomment?commentId='+encodeURIComponent(id),
+                dataType: "html",
+                success: function(result){
+                    window.location.href = "/"
+                }
+            });
+        }
+        else{
+            
+        }
     }
 
      function beginEditing(commentId, comment)
     {
+        document.body.style.paddingBottom = "450px"
         toggleEditingViews(commentId, true)
         var commentBoxId = 'edit-textbox-'+commentId
         var textBox = document.getElementById(commentBoxId)
@@ -226,6 +276,7 @@ body {
 
     function cancelEdit(commentId)
     {
+        document.body.style.paddingBottom = "20px"
         toggleEditingViews(commentId, false)
     }
 
@@ -234,17 +285,17 @@ body {
         var viewId = 'edit-box-'+commentId
         var editId =  'editButton-'+commentId
         var deleteId = 'deleteButton-'+commentId
-        var commentBoxId = 'comment-text-'+commentId
+       // var commentBoxId = 'comment-text-'+commentId
         if (shouldEdit) {
             $('#'+viewId).show();
             $('#'+editId).hide();
             $('#'+deleteId).hide();
-            $('#'+commentBoxId).hide();
+        //    $('#'+commentBoxId).hide();
         } else {
             $('#'+viewId).hide();
             $('#'+editId).show();
             $('#'+deleteId).show();
-            $('#'+commentBoxId).show();
+//$('#'+commentBoxId).show();
         }
     }
 
