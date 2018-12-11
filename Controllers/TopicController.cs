@@ -17,7 +17,7 @@ namespace Discussions.Controllers
         private DiscussionContext _context;
 
         private User currentUser = new User {
-            id= new System.Guid("0E9E3C83-2674-42CB-BB67-56283E078462"),
+            id= new System.Guid("554FD732-7736-4B6C-AA40-2A1175733C2E"),
             name = "Demo User", 
             imageUrl = "https://randomuser.me/api/portraits/men/2.jpg"
         };

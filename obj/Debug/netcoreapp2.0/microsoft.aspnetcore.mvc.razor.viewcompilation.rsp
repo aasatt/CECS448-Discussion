@@ -1,0 +1,13 @@
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions
+--output-path=obj/Debug/netcoreapp2.0/
+--application-name=Discussions
+--content-root=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/Home/About.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/Home/Contact.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/Home/Index.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/Shared/Error.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/Shared/_Layout.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/Shared/_ValidationScriptsPartial.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/Topic/Index.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/_ViewImports.cshtml
+--file=/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/Views/_ViewStart.cshtml

@@ -1,0 +1,13 @@
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/libhostpolicy.dylib
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/libhostfxr.dylib
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/Discussions
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.deps.json
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.runtimeconfig.json
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.runtimeconfig.dev.json
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.dll
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/bin/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.pdb
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.csproj.CoreCompileInputs.cache
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.AssemblyInfoInputs.cache
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.AssemblyInfo.cs
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.dll
+/Users/aaronsatterfield/Desktop/CECS448-2/Discussions/obj/Debug/netcoreapp2.0/osx.10.12-x64/Discussions.pdb
